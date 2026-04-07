@@ -1,0 +1,27 @@
+- generic [active] [ref=e1]:
+    - button "Open Next.js Dev Tools" [ref=e20] [cursor=pointer]:
+        - img [ref=e21]
+    - alert [ref=e24]
+    - banner [ref=e31]:
+        - link "Notes" [ref=e32] [cursor=pointer]:
+            - /url: /dashboard
+        - generic [ref=e33]:
+            - generic [ref=e34]: Test User
+            - button "Log out" [ref=e35]
+    - main [ref=e73]:
+        - generic [ref=e74]:
+            - link "← My Notes" [ref=e75] [cursor=pointer]:
+                - /url: /dashboard
+            - generic [ref=e76]:
+                - link "Edit" [ref=e77] [cursor=pointer]:
+                    - /url: /notes/322cf763-702c-4a60-9070-9d598c070926/edit
+                - button "Delete" [ref=e78]
+        - heading "My Test Note" [level=1] [ref=e79]
+        - paragraph [ref=e80]: Last updated Apr 7, 2026 at 6:15 PM
+        - generic [ref=e82]:
+            - generic [ref=e83]:
+                - paragraph [ref=e84]: Public sharing
+                - paragraph [ref=e85]: Sharing is off
+            - switch [ref=e86]
+        - separator [ref=e88]
+        - paragraph [ref=e90]: This is a test note with some content. Let's see if it saves correctly!

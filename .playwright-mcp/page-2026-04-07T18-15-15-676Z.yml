@@ -1,0 +1,35 @@
+- generic [ref=e1]:
+    - button "Open Next.js Dev Tools" [ref=e20] [cursor=pointer]:
+        - img [ref=e21]
+    - alert [ref=e24]
+    - banner [ref=e31]:
+        - link "Notes" [ref=e32] [cursor=pointer]:
+            - /url: /dashboard
+        - generic [ref=e33]:
+            - generic [ref=e34]: Test User
+            - button "Log out" [ref=e35]
+    - main [ref=e43]:
+        - heading "New Note" [level=1] [ref=e44]
+        - generic [ref=e45]:
+            - generic [ref=e46]:
+                - generic [ref=e47]: Title
+                - textbox "Untitled note" [ref=e48]: My Test Note
+            - generic [ref=e49]:
+                - generic [ref=e50]:
+                    - generic [ref=e51]: Content
+                    - generic [ref=e52]:
+                        - button "B" [ref=e53]:
+                            - strong [ref=e54]: B
+                        - button "I" [ref=e55]:
+                            - emphasis [ref=e56]: I
+                        - button "H1" [ref=e58]
+                        - button "H2" [ref=e59]
+                        - button "H3" [ref=e60]
+                        - button "≡" [ref=e62]
+                        - button "<>" [ref=e63]
+                        - 'button "{}" [ref=e64]'
+                        - button "—" [ref=e65]
+                - paragraph [ref=e69]
+            - generic [ref=e70]:
+                - generic [ref=e71]: Press Create to save your note
+                - button "Create Note" [ref=e72]

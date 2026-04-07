@@ -1,0 +1,8 @@
+- generic [active] [ref=e1]:
+    - main [ref=e2]:
+        - heading "Shared Public Note" [level=1] [ref=e3]
+        - separator [ref=e4]
+        - paragraph [ref=e6]: This note is publicly visible to anyone with the link.
+    - button "Open Next.js Dev Tools" [ref=e12] [cursor=pointer]:
+        - img [ref=e13]
+    - alert [ref=e16]

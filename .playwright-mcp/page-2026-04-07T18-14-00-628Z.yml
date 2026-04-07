@@ -1,0 +1,25 @@
+- generic [ref=e1]:
+    - main [ref=e2]:
+        - generic [ref=e3]:
+            - heading "Create an account" [level=1] [ref=e25]
+            - generic [ref=e5]:
+                - generic [ref=e26]:
+                    - generic [ref=e27]: Name
+                    - textbox "Name" [ref=e28]:
+                        - /placeholder: Your name
+                - generic [ref=e6]:
+                    - generic [ref=e7]: Email
+                    - textbox "Email" [ref=e8]:
+                        - /placeholder: you@example.com
+                - generic [ref=e9]:
+                    - generic [ref=e10]: Password
+                    - textbox "Password" [ref=e11]:
+                        - /placeholder: ••••••••
+                - button "Create account" [ref=e29]
+            - paragraph [ref=e13]:
+                - text: Already have an account?
+                - link "Sign in" [active] [ref=e30] [cursor=pointer]:
+                    - /url: /authenticate
+    - button "Open Next.js Dev Tools" [ref=e20] [cursor=pointer]:
+        - img [ref=e21]
+    - alert [ref=e24]
