@@ -14,6 +14,7 @@ export default function ShareToggle({ noteId, initialIsPublic, initialSlug }: Pr
   const [isLoading, setIsLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [origin, setOrigin] = useState('');
+  const [confirming, setConfirming] = useState(false);
 
   useEffect(() => {
     setOrigin(window.location.origin);
@@ -49,6 +50,31 @@ export default function ShareToggle({ noteId, initialIsPublic, initialSlug }: Pr
     <div className='flex items-start gap-3 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 px-4 py-3'>
       <div className='flex-1 min-w-0'>
         <p className='text-sm font-medium text-foreground'>Public sharing</p>
+        {confirming && (
+          <div className='mt-2 flex items-center gap-2'>
+            <span className='text-xs text-neutral-500 dark:text-neutral-400'>
+              Make this note public?
+            </span>
+            <button
+              type='button'
+              onClick={async () => {
+                await handleToggle();
+                setConfirming(false);
+              }}
+              disabled={isLoading}
+              className='text-xs font-medium text-blue-500 hover:text-blue-600 disabled:opacity-50'
+            >
+              Confirm
+            </button>
+            <button
+              type='button'
+              onClick={() => setConfirming(false)}
+              className='text-xs text-neutral-400 hover:text-foreground'
+            >
+              Cancel
+            </button>
+          </div>
+        )}
         {isPublic && publicUrl ? (
           <div className='mt-1 flex items-center gap-2'>
             <a
@@ -75,8 +101,8 @@ export default function ShareToggle({ noteId, initialIsPublic, initialSlug }: Pr
         type='button'
         role='switch'
         aria-checked={isPublic}
-        disabled={isLoading}
-        onClick={handleToggle}
+        disabled={isLoading || confirming}
+        onClick={() => (!isPublic ? setConfirming(true) : handleToggle())}
         className={`relative mt-0.5 h-5 w-9 shrink-0 rounded-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50 ${
           isPublic ? 'bg-blue-500' : 'bg-neutral-300 dark:bg-neutral-600'
         }`}

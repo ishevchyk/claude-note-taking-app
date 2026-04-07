@@ -68,6 +68,7 @@ describe('ShareToggle', () => {
     );
     render(<ShareToggle noteId='note-1' initialIsPublic={false} initialSlug={null} />);
     await userEvent.click(screen.getByRole('switch'));
+    await userEvent.click(screen.getByRole('button', { name: 'Confirm' }));
     expect(fetch).toHaveBeenCalledWith(
       '/api/notes/note-1/share',
       expect.objectContaining({
@@ -83,6 +84,7 @@ describe('ShareToggle', () => {
     );
     render(<ShareToggle noteId='note-1' initialIsPublic={false} initialSlug={null} />);
     await userEvent.click(screen.getByRole('switch'));
+    await userEvent.click(screen.getByRole('button', { name: 'Confirm' }));
     await waitFor(() => {
       expect(screen.getByRole('switch')).toHaveAttribute('aria-checked', 'true');
     });
@@ -113,7 +115,50 @@ describe('ShareToggle', () => {
     vi.mocked(fetch).mockReturnValue(new Promise((r) => (resolve = r)));
     render(<ShareToggle noteId='note-1' initialIsPublic={false} initialSlug={null} />);
     await userEvent.click(screen.getByRole('switch'));
+    // confirming state shown, not loading yet
+    await userEvent.click(screen.getByRole('button', { name: 'Confirm' }));
     expect(screen.getByRole('switch')).toBeDisabled();
     resolve!(new Response(JSON.stringify({ isPublic: true, publicSlug: 'slug' }), { status: 200 }));
+  });
+
+  it('shows confirmation when enabling sharing', async () => {
+    render(<ShareToggle noteId='note-1' initialIsPublic={false} initialSlug={null} />);
+    await userEvent.click(screen.getByRole('switch'));
+    expect(screen.getByText('Make this note public?')).toBeInTheDocument();
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
+  it('canceling confirmation does not call fetch', async () => {
+    render(<ShareToggle noteId='note-1' initialIsPublic={false} initialSlug={null} />);
+    await userEvent.click(screen.getByRole('switch'));
+    await userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+    expect(fetch).not.toHaveBeenCalled();
+    expect(screen.queryByText('Make this note public?')).not.toBeInTheDocument();
+  });
+
+  it('confirming calls fetch and hides confirmation', async () => {
+    vi.mocked(fetch).mockResolvedValue(
+      new Response(JSON.stringify({ isPublic: true, publicSlug: 'new-slug' }), { status: 200 }),
+    );
+    render(<ShareToggle noteId='note-1' initialIsPublic={false} initialSlug={null} />);
+    await userEvent.click(screen.getByRole('switch'));
+    await userEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+    expect(fetch).toHaveBeenCalledWith(
+      '/api/notes/note-1/share',
+      expect.objectContaining({ method: 'POST' }),
+    );
+    await waitFor(() => {
+      expect(screen.queryByText('Make this note public?')).not.toBeInTheDocument();
+    });
+  });
+
+  it('disabling sharing calls fetch directly without confirmation', async () => {
+    vi.mocked(fetch).mockResolvedValue(
+      new Response(JSON.stringify({ isPublic: false, publicSlug: null }), { status: 200 }),
+    );
+    render(<ShareToggle noteId='note-1' initialIsPublic={true} initialSlug='my-slug' />);
+    await userEvent.click(screen.getByRole('switch'));
+    expect(fetch).toHaveBeenCalled();
+    expect(screen.queryByText('Make this note public?')).not.toBeInTheDocument();
   });
 });
