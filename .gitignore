@@ -42,3 +42,12 @@ next-env.d.ts
 
 # database
 /data
+
+# IDE
+.idea/
+
+# playwright mcp artifacts
+.playwright-mcp/
+
+# claude code local settings
+.claude/settings.local.json
