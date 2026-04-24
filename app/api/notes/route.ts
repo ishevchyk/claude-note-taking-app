@@ -10,6 +10,7 @@ const createNoteSchema = z.object({
 
 export async function POST(request: Request) {
   const origin = request.headers.get('origin');
+  console.log(origin)
   const allowedOrigin = (process.env.BETTER_AUTH_URL ?? 'http://localhost:3000').replace(/\/$/, '');
   if (!origin || origin !== allowedOrigin) {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
